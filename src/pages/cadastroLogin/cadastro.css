@@ -1,0 +1,94 @@
+.App {
+    font-family: Arial, sans-serif;
+    text-align: center;
+  }
+  *{
+    background-color: #A6CDC6;
+  }
+  
+  form{
+    background-color: #FBF5DD;
+  }
+  
+  nav ul {
+    list-style-type: none;
+    padding: 0;
+  
+  }
+  
+  nav ul li {
+    display: inline;
+    margin-right: 20px;
+    
+  }
+  
+  .login-container, .cadastro-container {
+    max-width: 400px;
+    margin: 90px auto;
+    padding: 80px;
+    border: 1px ;
+    border-radius: 8px;
+    background-color: #FBF5DD;
+  }
+  
+  h2 {
+    font-size: 30px;
+    margin-bottom: 20px;
+    background-color: #FBF5DD;
+    display: flex;
+    justify-content: center;
+  
+  }
+  
+  form div {
+    margin-bottom: 15px;
+    background-color: #FBF5DD;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+    background-color: #FBF5DD;
+    font-size: 25px;
+    font-weight: bold;
+  
+  }
+  
+  input {
+    width: 100%;
+    padding: 8px;
+    border: 2px solid #16404D;
+    border-radius: 4px;
+    background-color: #FBF5DD;
+  }
+  
+  input:focus {
+   
+    background-color: rgb(221, 168, 83, 0.4);
+    
+  }
+  
+  button {
+    padding: 10px 20px;
+    background-color: #16404D;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: bold;
+    
+    
+  }
+  
+  button:hover {
+    background-color: #DDA853;
+  }
+  
+  
+  .botoes{
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 20px;
+  }
