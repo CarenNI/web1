@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // já importado, ok!
-import { useAuth } from '../../contexts/AuthContext.jsx'; // Caminho: '../../contexts/AuthContext.jsx'
+import { useNavigate } from 'react-router-dom'; 
+import { useAuth } from '../../contexts/AuthContext.jsx'; 
 import './cadastro.css';
 
 function Cadastro() {
@@ -8,7 +8,7 @@ function Cadastro() {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
 
-  const navigate = useNavigate(); // aqui está o hook de navegação
+  const navigate = useNavigate(); 
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -16,7 +16,7 @@ function Cadastro() {
   };
 
   const irParaLogin = () => {
-    navigate('/login'); // redireciona para /login
+    navigate('/login'); 
   };
 
   return (
