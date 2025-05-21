@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // já importado, ok!
-
+import { useAuth } from '../../contexts/AuthContext.jsx'; // Caminho: '../../contexts/AuthContext.jsx'
 import './cadastro.css';
 
 function Cadastro() {
