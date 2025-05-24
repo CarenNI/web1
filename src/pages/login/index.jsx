@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../contexts/AuthContext.jsx'; // Caminho: '../../contexts/AuthContext.jsx'
+import { useAuth } from '../../contexts/AuthContext.jsx'; 
+import './login.css'; 
 
-import './login.css'; // Assumindo que você tem um login.css
-
-function Login() { // Corrigido para Login (maiúscula)
+function Login() { 
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
 
@@ -12,19 +11,26 @@ function Login() { // Corrigido para Login (maiúscula)
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Removido 'nome', pois não é usado neste componente de Login
+    if (!email.trim() || !senha.trim()) {
+    alert('Por favor, preencha todos os campos!');
+    return;
+    }
     console.log('Tentativa de Login com:', email, senha);
-    // Aqui você adicionaria a lógica de autenticação
+    navigate('/produtos');
+  };
+const irParaProduto =()=>{
+  navigate('/produtos')
+}
+  
+  const irParaCadastro = () => {
+    navigate('/cadastro'); 
   };
 
-  // Nome da função mais claro para navegar para o cadastro
-  const irParaCadastro = () => {
-    navigate('/cadastro'); // Rota correta para o cadastro, conforme seu Routers.jsx
-  };
+
 
   return (
-    <div className="cadastro-container"> {/* Considere renomear para login-container */}
-      <h2>Login</h2> {/* Título para Login */}
+    <div className="cadastro-container"> 
+      <h2>Login</h2>
       <form onSubmit={handleSubmit}>
         <div>
           <label>Email:</label>
@@ -45,8 +51,8 @@ function Login() { // Corrigido para Login (maiúscula)
           />
         </div>
         <div className='botoes'>
-          <button type="submit">Entrar</button>
-          {/* Usando a função corrigida e nomeada corretamente */}
+          <button type="submit" >Entrar</button>
+        
           <button type="button" onClick={irParaCadastro}>Fazer cadastro</button>
         </div>
       </form>
@@ -54,4 +60,4 @@ function Login() { // Corrigido para Login (maiúscula)
   );
 }
 
-export default Login; // Corrigido para exportar Login
+export default Login; 

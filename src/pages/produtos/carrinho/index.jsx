@@ -1,9 +1,9 @@
 import React from 'react';
-import './carrinho.css'; // Seu CSS para o carrinho
-import { FaTimes } from 'react-icons/fa'; // Ícone para remover item
+import './carrinho.css'; 
+import { FaTimes } from 'react-icons/fa'; 
 
 function Carrinho({ cartItems, removeItem, increaseQuantity, decreaseQuantity }) {
-  // Calcula o total do carrinho
+
   const total = cartItems.reduce((acc, item) => acc + (item.valor * item.quantidade), 0);
 
   return (

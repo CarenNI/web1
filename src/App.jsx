@@ -1,14 +1,17 @@
-import React from "react";
-import { BrowserRouter } from "react-router-dom";
-import Routers from "./components/routers"; 
+// src/App.jsx
+import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
+import Routers from './components/routers';
 import { AuthProvider } from './contexts/AuthContext.jsx';
 
-function App() {
+function App() { // A função App
   return (
     <BrowserRouter>
-      <Routers />
+      <AuthProvider>
+        <Routers />
+      </AuthProvider>
     </BrowserRouter>
   );
 }
 
-export default App;
+export default App; 
