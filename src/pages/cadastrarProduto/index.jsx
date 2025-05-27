@@ -1,22 +1,22 @@
-// src/pages/cadastrarProduto/index.jsx
+
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-// Importa as funções do seu serviço de API (para criar, deletar, atualizar)
+
 import {
   CriarProduto,
   DeletarProduto,
   AtualizarProduto
-} from '../../components/data/fetchProdutos.jsx'; // <<-- Caminho corrigido para components/data/fetchProdutos.jsx
+} from '../../components/data/fetchProdutos.jsx'; 
 
-// Importa seu DataContext (para acessar e recarregar a lista de produtos)
-import { DataContext } from '../../contexts/data.jsx'; // <<-- Caminho corrigido para contexts/data.jsx
 
-import './cadastroproduto.css'; // CSS específico da página de cadastro de produtos
+import { DataContext } from '../../contexts/data.jsx'; 
+
+import './cadastroproduto.css'; 
 
 const CadastroProduto = () => {
-  // Acessa os produtos e a função de recarregamento do contexto
-  const { produtos, carregarProdutos } = useContext(DataContext); // Não precisamos de setProdutos aqui, pois carregarProdutos fará o trabalho
+
+  const { produtos, carregarProdutos } = useContext(DataContext); 
 
   const [produtoEmEdicao, setProdutoEmEdicao] = useState(null);
   const [formDados, setFormDados] = useState({
@@ -28,8 +28,7 @@ const CadastroProduto = () => {
 
   const navigate = useNavigate();
 
-  // Removido o useEffect para carregarProdutos daqui, pois o DataProvider já faz isso globalmente.
-  // A lista de produtos agora vem do contexto.
+
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -57,16 +56,16 @@ const CadastroProduto = () => {
 
     try {
       if (produtoEmEdicao) {
-        // Chamar a função de atualização da API
+        
         await AtualizarProduto(formDados.id, formDados.nome, valorNumerico, formDados.imagem);
         alert('Produto atualizado com sucesso na API!');
       } else {
-        // Chamar a função de criação da API
+        
         await CriarProduto(formDados.nome, valorNumerico, formDados.imagem);
         alert('Produto cadastrado com sucesso na API!');
       }
       limparFormulario();
-      await carregarProdutos(); // Chama a função de recarga do Context para atualizar a lista em todos os lugares
+      await carregarProdutos(); 
     } catch (err) {
       alert('Erro ao salvar produto. Verifique o console para mais detalhes.');
       console.error("Erro no salvarProduto:", err);
@@ -86,10 +85,10 @@ const CadastroProduto = () => {
   const excluirProduto = async (id) => {
     if (window.confirm('Tem certeza que deseja excluir este produto?')) {
       try {
-        await DeletarProduto(id); // Chama a função de exclusão da API
+        await DeletarProduto(id); 
         alert('Produto excluído com sucesso da API!');
-        limparFormulario(); // Limpa o formulário caso o produto editado seja excluído
-        await carregarProdutos(); // Chama a função de recarga do Context
+        limparFormulario(); 
+        await carregarProdutos(); 
       } catch (err) {
         alert('Erro ao excluir produto. Verifique o console para mais detalhes.');
         console.error("Erro no excluirProduto:", err);
@@ -98,7 +97,7 @@ const CadastroProduto = () => {
   };
 
   const handleSair = () => {
-    navigate('/produtos'); // Redireciona de volta para a página de produtos
+    navigate('/produtos'); 
   };
 
   return (

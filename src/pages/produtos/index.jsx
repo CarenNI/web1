@@ -1,44 +1,44 @@
 // src/pages/produtos/index.jsx
-import React, { useEffect } from 'react'; // Adicionado useEffect
+import React, { useEffect } from 'react'; 
 import { useNavigate } from 'react-router-dom';
-import { FaShoppingCart, FaTimes } from 'react-icons/fa'; // Ícones
+import { FaShoppingCart, FaTimes } from 'react-icons/fa'; 
 
 // Importa seus contextos
-import { DataContext } from '../../contexts/data.jsx';       // Caminho corrigido para contexts/data.jsx
-import { useAuth } from "../../contexts/AuthContext.jsx"; // Caminho corrigido para contexts/AuthContext.jsx
+import { DataContext } from '../../contexts/data.jsx';      
+import { useAuth } from "../../contexts/AuthContext.jsx"; 
 
-import "./produtos.css"; // CSS específico da página de produtos
-// REMOVEMOS: import { produtos } from "./produtos"; // Pois os produtos virão do DataContext
+import "./produtos.css"; 
 
-// Verifique o caminho para o componente Carrinho
-import Carrinho from "./carrinho/index.jsx"; // Assumindo que seu Carrinho está em pages/produtos/carrinho/index.jsx
+
+
+import Carrinho from "./carrinho/index.jsx"; 
 
 export default function Produtos() {
   const [cartItems, setCartItems] = React.useState([]);
   const [showCart, setShowCart] = React.useState(false);
 
   const navigate = useNavigate();
-  const { logout, user } = useAuth(); // Assume que useAuth fornece 'logout' e 'user' (para verificar se é admin, por exemplo)
+  const { logout, user } = useAuth(); 
 
-  // Consome os produtos e a função de carregamento do DataContext
+  
   const { produtos, carregarProdutos } = React.useContext(DataContext);
 
-  // Efeito para carregar os produtos quando este componente é montado
+  
   useEffect(() => {
     carregarProdutos();
-  }, [carregarProdutos]); // carregarProdutos é uma dependência do useCallback no DataProvider
+  }, [carregarProdutos]); 
 
   function handleLogout() {
-    logout(); // Chama a função de logout do contexto de autenticação
-    navigate('/login'); // Redireciona para a página de login após o logout
+    logout(); 
+    navigate('/login'); 
   }
 
   function irParaCadastrarProduto() {
-    // IMPORTANTE: Este PATH deve CORRESPONDER EXATAMENTE ao path da rota protegida em App.jsx
+   
     navigate('/gerenciar-produtos');
   }
 
-  // Funções do carrinho (mantidas as mesmas)
+
   function addItem(productToAdd) {
     setCartItems((prevCartItems) => {
       const existingItem = prevCartItems.find(item => item.nome === productToAdd.nome);
@@ -86,9 +86,7 @@ export default function Produtos() {
         <button onClick={handleLogout} className="logoutButton">
           Sair
         </button>
-        {/* BOTÃO PARA CADASTRAR PRODUTO - Visível apenas para o admin (exemplo) */}
-        {/* Você pode adicionar uma lógica aqui para mostrar o botão apenas se o usuário tiver permissão de admin.
-            Ex: {user && user.role === 'admin' && ( */}
+        
         <button onClick={irParaCadastrarProduto} className="cadastrarProdutoButton">
           Gerenciar Produtos
         </button>
@@ -131,7 +129,7 @@ export default function Produtos() {
           produtos.map((item) => {
             return (
               <div
-                key={item.id} // É crucial usar um ID único como key
+                key={item.id} 
                 className="produto"
               >
                 <img

@@ -1,13 +1,13 @@
-// src/App.jsx
+
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-// Importa seus componentes e provedores de contexto
-import PrivateRoute from "./components/PrivateRoute.jsx"; // Caminho corrigido
-import DataProvider from "./contexts/data.jsx";           // Caminho corrigido
-import { AuthProvider } from "./contexts/AuthContext.jsx"; // <<-- AGORA COMO NAMED IMPORT (com chaves)
 
-// Importa suas páginas
+import PrivateRoute from "./components/PrivateRoute.jsx"; 
+import DataProvider from "./contexts/data.jsx";           
+import { AuthProvider } from "./contexts/AuthContext.jsx"; 
+
+
 import Login from "./pages/login/index.jsx";
 import Produtos from "./pages/produtos/index.jsx";
 import CadastroProduto from "./pages/cadastrarProduto/index.jsx";
@@ -15,7 +15,7 @@ import CadastroProduto from "./pages/cadastrarProduto/index.jsx";
 function App() {
   return (
     <Router>
-      <AuthProvider> {/* O componente é usado normalmente */}
+      <AuthProvider> 
         <DataProvider>
           <Routes>
             <Route path="/" element={<Login />} />
