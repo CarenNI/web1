@@ -1,69 +1,89 @@
 
-import axios from "axios";
+const API_URL = "http://localhost:3000/produtos";
 
-const API_BASE_URL = "http://localhost:3000/produtos"; 
-export async function CriarProduto(nome, valor, imagem) {
+export const CriarProduto = async (nome, valor, imagem) => {
   try {
-    const response = await axios.post(
-      `${API_BASE_URL}/criar`, 
-      { nome, valor, imagem },
-      {
-        headers: { "Content-Type": "application/json" },
-      }
-    );
-    console.log("Sucesso em criar produto:", response.data);
-    return response.data; 
-  } catch (error) {
-    console.error("Erro ao criar produto:", error);
-    throw error; 
-  }
-}
-
-export async function LerProdutos() { 
-  try {
-    const response = await axios.get(`${API_BASE_URL}/ler`, {
-      headers: { "Content-Type": "application/json" },
+    const response = await fetch(API_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ nome, valor, imagem }),
     });
-    console.log("Sucesso em ler produtos");
-    return response.data; 
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(`Erro ao criar produto: ${errorData.message || response.statusText}`);
+    }
+    return await response.json();
   } catch (error) {
-    console.error("Erro ao ler produtos:", error);
+    console.error("Erro na função CriarProduto:", error);
     throw error;
   }
-}
+};
 
-export async function DeletarProduto(id) {
+// Função para LER TODOS os produtos
+export const LerProdutos = async () => {
   try {
-    
-    const response = await axios.delete(
-      `${API_BASE_URL}/deletar`, 
-      { data: { id } },
-      {
-        headers: { "Content-Type": "application/json" },
-      }
-    );
-    console.log("Sucesso em deletar produto");
-    return response.data;
+    const response = await fetch(API_URL);
+    if (!response.ok) {
+      throw new Error(`Erro ao carregar produtos: ${response.statusText}`);
+    }
+    return await response.json();
   } catch (error) {
-    console.error("Erro ao deletar produto:", error);
+    console.error("Erro na função LerProdutos:", error);
     throw error;
   }
-}
+};
 
-export async function AtualizarProduto(id, nome, valor, imagem) {
+export const LerProdutoPorId = async (id) => {
   try {
-
-    const response = await axios.post( 
-      `${API_BASE_URL}/editar`, 
-      { id, nome, valor, imagem },
-      {
-        headers: { "Content-Type": "application/json" },
+    const response = await fetch(`${API_URL}/${id}`); 
+    if (!response.ok) {
+      if (response.status === 404) {
+        return null; 
       }
-    );
-    console.log("Sucesso em editar produto");
-    return response.data;
+      throw new Error(`Erro ao carregar produto por ID: ${response.statusText}`);
+    }
+    return await response.json();
   } catch (error) {
-    console.error("Erro ao editar produto:", error);
+    console.error(`Erro na função LerProdutoPorId (ID: ${id}):`, error);
     throw error;
   }
-}
+};
+
+// Função para ATUALIZAR um produto
+export const AtualizarProduto = async (id, nome, valor, imagem) => {
+  try {
+    const response = await fetch(`${API_URL}/${id}`, {
+      method: "PUT", // Ou PATCH, dependendo da sua API
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ nome, valor, imagem }),
+    });
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(`Erro ao atualizar produto: ${errorData.message || response.statusText}`);
+    }
+    return await response.json();
+  } catch (error) {
+    console.error("Erro na função AtualizarProduto:", error);
+    throw error;
+  }
+};
+
+
+export const DeletarProduto = async (id) => {
+  try {
+    const response = await fetch(`${API_URL}/${id}`, {
+      method: "DELETE",
+    });
+    if (!response.ok) {
+      throw new Error(`Erro ao deletar produto: ${response.statusText}`);
+    }
+    return;
+  } catch (error) {
+    console.error("Erro na função DeletarProduto:", error);
+    throw error;
+  }
+};

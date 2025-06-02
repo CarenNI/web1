@@ -1,0 +1,126 @@
+/* src/pages/cadastrarNovoProduto/cadastrarNovoProduto.css */
+
+.cadastrar-produto-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f0f2f5; /* Cor de fundo similar ao resto do admin */
+}
+
+.cadastrar-produto-card {
+  background-color: #fff;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 500px; /* Largura máxima do formulário */
+  text-align: center;
+}
+
+.cadastrar-produto-card h2 {
+  color: #333;
+  margin-bottom: 30px;
+  font-size: 2em;
+}
+
+.form-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  color: #555;
+  font-weight: 600;
+  font-size: 1.1em;
+}
+
+.form-group input {
+  width: calc(100% - 20px); /* Ajusta para padding */
+  padding: 12px 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1em;
+  color: #333;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #92bfa7; /* Cor de foco similar aos botões */
+  box-shadow: 0 0 0 3px rgba(146, 191, 167, 0.3);
+}
+
+.form-actions {
+  display: flex;
+  justify-content: center;
+  gap: 15px; /* Espaçamento entre os botões */
+  margin-top: 30px;
+}
+
+.save-button,
+.clear-button,
+.back-to-list-button {
+  padding: 12px 25px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.1em;
+  font-weight: 600;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.save-button {
+  background-color: #92bfa7; /* Cor principal de sucesso */
+  color: white;
+}
+
+.save-button:hover {
+  background-color: #7baa8f;
+  transform: translateY(-2px);
+}
+
+.clear-button {
+  background-color: #e0e0e0; /* Cinza claro */
+  color: #555;
+}
+
+.clear-button:hover {
+  background-color: #cccccc;
+  transform: translateY(-2px);
+}
+
+.back-to-list-button {
+  background-color: #6c757d; /* Um cinza mais escuro para o botão de voltar */
+  color: white;
+  margin-top: 25px;
+  width: calc(100% - 20px); /* Ocupa a largura total do formulário */
+  max-width: 250px; /* Mas com limite para não ser muito grande */
+}
+
+.back-to-list-button:hover {
+  background-color: #5a6268;
+  transform: translateY(-2px);
+}
+
+/* Responsividade básica */
+@media (max-width: 600px) {
+  .cadastrar-produto-card {
+    margin: 20px;
+    padding: 30px;
+  }
+
+  .form-actions {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .save-button,
+  .clear-button,
+  .back-to-list-button {
+    width: 100%;
+    max-width: none;
+  }
+}
