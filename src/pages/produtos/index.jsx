@@ -1,43 +1,36 @@
 // src/pages/produtos/index.jsx
-import React, { useEffect } from 'react'; 
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FaShoppingCart, FaTimes } from 'react-icons/fa'; 
+import { FaShoppingCart, FaTimes } from 'react-icons/fa';
 
-// Importa seus contextos
-import { DataContext } from '../../contexts/data.jsx';      
-import { useAuth } from "../../contexts/AuthContext.jsx"; 
+import { DataContext } from '../../contexts/data.jsx';
+import { useAuth } from "../../contexts/AuthContext.jsx";
 
-import "./produtos.css"; 
+import "./produtos.css";
 
-
-
-import Carrinho from "./carrinho/index.jsx"; 
+import Carrinho from "./carrinho/index.jsx";
 
 export default function Produtos() {
   const [cartItems, setCartItems] = React.useState([]);
   const [showCart, setShowCart] = React.useState(false);
 
   const navigate = useNavigate();
-  const { logout, user } = useAuth(); 
+  const { logout, user } = useAuth();
 
-  
   const { produtos, carregarProdutos } = React.useContext(DataContext);
 
-  
   useEffect(() => {
     carregarProdutos();
-  }, [carregarProdutos]); 
+  }, [carregarProdutos]);
 
   function handleLogout() {
-    logout(); 
-    navigate('/login'); 
+    logout();
+    navigate('/login');
   }
 
   function irParaCadastrarProduto() {
-   
-    navigate('/gerenciar-produtos');
+    navigate('/admin/produtos/listar');
   }
-
 
   function addItem(productToAdd) {
     setCartItems((prevCartItems) => {
@@ -86,7 +79,7 @@ export default function Produtos() {
         <button onClick={handleLogout} className="logoutButton">
           Sair
         </button>
-        
+
         <button onClick={irParaCadastrarProduto} className="cadastrarProdutoButton">
           Gerenciar Produtos
         </button>
@@ -99,7 +92,7 @@ export default function Produtos() {
 
         <span className="cartCount">
           {cartItems.reduce((total, item) => total + item.quantidade, 0) > 0 &&
-             cartItems.reduce((total, item) => total + item.quantidade, 0)}
+            cartItems.reduce((total, item) => total + item.quantidade, 0)}
         </span>
       </div>
 
@@ -122,14 +115,13 @@ export default function Produtos() {
       )}
 
       <div className="produtos">
-        {/* Exibir produtos do Context API */}
         {produtos.length === 0 ? (
           <p>Nenhum produto cadastrado ou carregando produtos...</p>
         ) : (
           produtos.map((item) => {
             return (
               <div
-                key={item.id} 
+                key={item.id}
                 className="produto"
               >
                 <img
@@ -137,7 +129,7 @@ export default function Produtos() {
                   alt={item.nome}
                 />
                 <h4>{item.nome}</h4>
-                <p>R$ {parseFloat(item.valor).toFixed(2).replace('.', ',')}</p> {/* Formatação do valor */}
+                <p>R$ {parseFloat(item.valor).toFixed(2).replace('.', ',')}</p>
                 <button onClick={() => addItem(item)}>Comprar</button>
               </div>
             );

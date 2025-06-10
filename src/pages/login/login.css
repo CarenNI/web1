@@ -1,57 +1,80 @@
-.App {
-  font-family: Arial, sans-serif;
-  text-align: center;
-}
-*{
-  background-color: #A6CDC6;
+
+/* Reset básico para melhor controle de layout */
+* {
+  box-sizing: border-box; /* Garante que padding e border sejam incluídos na largura/altura do elemento */
+  margin: 0;
+  padding: 0;
+  background-color: #A6CDC6; /* Fundo universal para a página */
 }
 
-form{
-  background-color: #FBF5DD;
+body {
+  font-family: Arial, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.App {
+  text-align: center;
+}
+
+form {
+  background-color: #FBF5DD; /* Fundo do formulário */
 }
 
 nav ul {
   list-style-type: none;
   padding: 0;
-
 }
 
 nav ul li {
   display: inline;
   margin-right: 20px;
-  
 }
 
+
 .login-container, .cadastro-container {
-  max-width: 400px;
-  margin: 90px auto;
-  padding: 80px;
-  border: 1px ;
-  border-radius: 8px;
-  background-color: #FBF5DD;
+   background-color: #FBF5DD;
+  padding: 150px; 
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 600px; 
+  text-align: center;
 }
+
+
+.login-card {
+  background-color: #FBF5DD; 
+  padding: 20px; 
+  border-radius: 8px; 
+  width: 100%;
+}
+
 
 h2 {
   font-size: 30px;
   margin-bottom: 20px;
-  background-color: #FBF5DD;
+  background-color: #FBF5DD; /* Garante que o h2 tenha o fundo correto */
   display: flex;
   justify-content: center;
-
+  color: #333; /* Cor do texto para contraste */
 }
 
 form div {
   margin-bottom: 15px;
-  background-color: #FBF5DD;
+  background-color: #FBF5DD; /* Garante que a div tenha o fundo correto */
+  width: 100%;
 }
 
 label {
   display: block;
   margin-bottom: 5px;
-  background-color: #FBF5DD;
+  background-color: #FBF5DD; 
   font-size: 25px;
   font-weight: bold;
-
+  color: #555;
 }
 
 input {
@@ -59,13 +82,14 @@ input {
   padding: 8px;
   border: 2px solid #16404D;
   border-radius: 4px;
-  background-color: #FBF5DD;
+  background-color: #FBF5DD; /* Garante que o input tenha o fundo correto */
+  color: #333; /* Cor do texto para o input */
 }
 
 input:focus {
- 
-  background-color: rgb(221, 168, 83, 0.4);
-  
+  background-color: rgba(221, 168, 83, 0.4); /* Fundo ao focar */
+  outline: none; /* Remove o contorno padrão do foco */
+  border-color: #DDA853; /* Borda ao focar */
 }
 
 button {
@@ -77,18 +101,24 @@ button {
   cursor: pointer;
   font-size: 20px;
   font-weight: bold;
-  
-  
+  transition: background-color 0.3s ease; /* Transição suave no hover */
 }
 
 button:hover {
   background-color: #DDA853;
 }
 
-
-.botoes{
+.botoes {
   display: flex;
   justify-content: center;
   gap: 16px;
   margin-top: 20px;
+  background-color: #FBF5DD; /* Garante que a div botoes tenha o fundo correto */
+}
+
+/* Estilos adicionais para os botões específicos na página de login */
+.login-button,
+.register-button {
+  flex: 1; /* Faz os botões ocuparem espaço similar */
+  max-width: 150px; /* Limita a largura dos botões */
 }

@@ -1,19 +1,30 @@
 // src/pages/cadastrarNovoProduto/index.jsx
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CriarProduto } from '../../components/data/fetchProdutos.jsx'; 
-import { DataContext } from '../../contexts/data.jsx'; 
+import { CriarProduto } from '../../components/data/fetchProdutos.jsx';
+import { DataContext } from '../../contexts/data.jsx';
 
-import './cadastrarNovoProduto.css'; 
+import './cadastrarNovoProduto.css';
 const CadastrarNovoProduto = () => {
   const navigate = useNavigate();
-  const { carregarProdutos } = useContext(DataContext); 
+  const { carregarProdutos } = useContext(DataContext);
 
   const [formDados, setFormDados] = useState({
     nome: '',
     valor: '',
-    imagem: '' // URL da imagem
+    imagem: ''
   });
+  const [message, setMessage] = useState('');
+  const [messageType, setMessageType] = useState('');
+
+  const displayMessage = (msg, type) => {
+    setMessage(msg);
+    setMessageType(type);
+    setTimeout(() => {
+      setMessage('');
+      setMessageType('');
+    }, 3000);
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -28,37 +39,41 @@ const CadastrarNovoProduto = () => {
     e.preventDefault();
 
     if (!formDados.nome || !formDados.valor || !formDados.imagem) {
-      alert('Por favor, preencha todos os campos do produto.');
+      displayMessage('Por favor, preencha todos os campos do produto.', 'error');
       return;
     }
 
     const valorNumerico = parseFloat(formDados.valor);
     if (isNaN(valorNumerico) || valorNumerico <= 0) {
-      alert('Por favor, insira um valor numérico válido e maior que zero para o produto.');
+      displayMessage('Por favor, insira um valor numérico válido e maior que zero para o produto.', 'error');
       return;
     }
 
     try {
-   
       await CriarProduto(formDados.nome, valorNumerico, formDados.imagem);
-      alert('Produto cadastrado com sucesso!');
-      limparFormulario(); 
+      displayMessage('Produto cadastrado com sucesso!', 'success');
+      limparFormulario();
       await carregarProdutos();
 
     } catch (error) {
       console.error('Erro ao cadastrar produto:', error);
-      alert('Erro ao cadastrar produto. Verifique o console para detalhes.');
+      displayMessage('Erro ao cadastrar produto. Verifique o console para detalhes.', 'error');
     }
   };
 
   const handleVoltar = () => {
-    navigate('/admin/produtos/listar'); 
+    navigate('/admin/produtos/listar');
   };
 
   return (
     <div className="cadastrar-produto-container">
       <div className="cadastrar-produto-card">
         <h2>Cadastrar Novo Produto</h2>
+        {message && (
+          <div className={`message-box ${messageType === 'success' ? 'message-success' : 'message-error'}`}>
+            {message}
+          </div>
+        )}
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="nome">Nome:</label>
@@ -90,7 +105,7 @@ const CadastrarNovoProduto = () => {
               name="valor"
               value={formDados.valor}
               onChange={handleInputChange}
-              step="0.01" // Permite valores decimais
+              step="0.01"
               required
             />
           </div>

@@ -1,63 +1,77 @@
+// src/pages/login/index.jsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext.jsx'; 
 import './login.css'; 
 
-function Login() { 
-  const [email, setEmail] = useState('');
-  const [senha, setSenha] = useState('');
+function Login() {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
 
   const navigate = useNavigate();
+  const { login } = useAuth(); 
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => { 
     e.preventDefault();
-    if (!email.trim() || !senha.trim()) {
-    alert('Por favor, preencha todos os campos!');
-    return;
+
+    if (!username.trim() || !password.trim()) {
+      alert('Por favor, preencha todos os campos!');
+      return;
     }
-    console.log('Tentativa de Login com:', email, senha);
-    navigate('/produtos');
+
+    console.log('Tentativa de Login com:', username, password);
+
+    
+    const success = await login(username, password);
+
+    if (success) {
+      navigate('/produtos'); 
+    } else {
+   
+    }
   };
-const irParaProduto =()=>{
-  navigate('/produtos')
-}
-  
+
   const irParaCadastro = () => {
-    navigate('/cadastro'); 
+    navigate('/cadastroLogin');
   };
-
-
 
   return (
-    <div className="cadastro-container"> 
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Email:</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Senha:</label>
-          <input
-            type="password"
-            value={senha}
-            onChange={(e) => setSenha(e.target.value)}
-            required
-          />
-        </div>
-        <div className='botoes'>
-          <button type="submit" >Entrar</button>
-        
-          <button type="button" onClick={irParaCadastro}>Fazer cadastro</button>
-        </div>
-      </form>
+    <div className="login-container">
+      <div className="login-card">
+        <h2>Login</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="username">Usuário:</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="password">Senha:</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+          <div className='botoes'>
+            <button type="submit" className="login-button">Entrar</button>
+            <button type="button" onClick={irParaCadastro} className="register-button">
+              Fazer cadastro
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }
 
-export default Login; 
+export default Login;

@@ -1,45 +1,69 @@
 // src/pages/listarProdutosAdmin/index.jsx
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { DataContext } from '../../contexts/data.jsx'; // Importa o contexto de dados
-import { DeletarProduto } from '../../components/data/fetchProdutos.jsx'; // Importa a função de deletar
+import { DataContext } from '../../contexts/data.jsx';
+import { DeletarProduto } from '../../components/data/fetchProdutos.jsx';
 
-import './listarProdutos.css'; // O CSS para esta página
+import './listarProdutosAdmin.css'; // Caminho do CSS corrigido
 
 const ListarProdutosAdmin = () => {
   const navigate = useNavigate();
-  const { produtos, carregarProdutos } = useContext(DataContext); // Pega produtos e a função de recarga do contexto
+  const { produtos, carregarProdutos } = useContext(DataContext);
 
-  // Carrega os produtos quando a página é montada
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [produtoToDeleteId, setProdutoToDeleteId] = useState(null);
+
+  const [message, setMessage] = useState('');
+  const [messageType, setMessageType] = useState('');
+
   useEffect(() => {
     carregarProdutos();
   }, [carregarProdutos]);
 
+  const displayMessage = (msg, type) => {
+    setMessage(msg);
+    setMessageType(type);
+    setTimeout(() => {
+      setMessage('');
+      setMessageType('');
+    }, 3000);
+  };
+
   const handleEditar = (produtoId) => {
-    // Navega para a página de edição, passando o ID do produto na URL
     navigate(`/admin/produtos/editar/${produtoId}`);
   };
 
-  const handleExcluir = async (produtoId) => {
-    if (window.confirm('Tem certeza que deseja excluir este produto?')) {
-      try {
-        await DeletarProduto(produtoId); // Chama a função da API para deletar
-        alert('Produto excluído com sucesso!');
-        await carregarProdutos(); // Recarrega a lista de produtos após a exclusão
-      } catch (error) {
-        console.error('Erro ao excluir produto:', error);
-        alert('Erro ao excluir produto. Verifique o console.');
-      }
+  const confirmExcluir = (produtoId) => {
+    setProdutoToDeleteId(produtoId);
+    setShowConfirmModal(true);
+  };
+
+  const handleExcluirConfirmed = async () => {
+    setShowConfirmModal(false);
+    if (!produtoToDeleteId) return;
+
+    try {
+      await DeletarProduto(produtoToDeleteId);
+      displayMessage('Produto excluído com sucesso!', 'success');
+      await carregarProdutos();
+    } catch (error) {
+      console.error('Erro ao excluir produto:', error);
+      displayMessage('Erro ao excluir produto. Verifique o console.', 'error');
+    } finally {
+      setProdutoToDeleteId(null);
     }
   };
 
+  const handleCancelExcluir = () => {
+    setShowConfirmModal(false);
+    setProdutoToDeleteId(null);
+  };
+
   const handleCadastrarNovo = () => {
-    navigate('/admin/produtos/cadastrar'); // Navega para a página de cadastro de novo produto
+    navigate('/admin/produtos/cadastrar');
   };
 
   const handleSair = () => {
-    // Implemente a lógica de sair/logout aqui, se não estiver no AuthContext
-    // Por enquanto, vamos voltar para a página de produtos principal
     navigate('/produtos');
   };
 
@@ -47,44 +71,66 @@ const ListarProdutosAdmin = () => {
     <div className="admin-page-container">
       <aside className="admin-sidebar">
         <div className="admin-sidebar-header">
-          <h3>Área cadastro</h3> {/* Texto da imagem */}
+          <h3>Área de Administração</h3>
         </div>
         <button className="admin-sidebar-button" onClick={handleCadastrarNovo}>
-          Cadastrar
+          Cadastrar Novo
         </button>
-        {/* O botão 'Salvar' da sidebar geralmente é para salvar configurações gerais,
-            ou pode ser removido se o salvamento for apenas nos formulários específicos.
-            Por enquanto, vamos omitir ou adaptar seu uso. */}
-        {/* <button className="admin-sidebar-button">Salvar</button> */}
         <button className="admin-sidebar-button" onClick={handleSair}>
-          Sair
+          Voltar para Loja
         </button>
       </aside>
 
       <main className="admin-content-area">
-        <h2>Gerenciamento de Produtos</h2> {/* Título para a área de conteúdo */}
+        <h2>Gerenciamento de Produtos</h2>
+
+        {message && (
+          <div className={`message-box ${messageType === 'success' ? 'message-success' : 'message-error'}`}>
+            {message}
+          </div>
+        )}
+
         <div className="admin-products-grid">
           {produtos.length === 0 ? (
-            <p>Nenhum produto cadastrado ainda. Use o botão "Cadastrar" para adicionar!</p>
+            <p>Nenhum produto cadastrado ainda. Use o botão "Cadastrar Novo" para adicionar!</p>
           ) : (
             produtos.map((produto) => (
               <div className="admin-product-card" key={produto.id}>
                 <img src={produto.imagem} alt={produto.nome} />
                 <h4>{produto.nome}</h4>
                 <p>R$ {parseFloat(produto.valor).toFixed(2).replace('.', ',')}</p>
-                <button className="admin-button edit-button" onClick={() => handleEditar(produto.id)}>
-                  EDITAR
-                </button>
-                <button className="admin-button exclude-button" onClick={() => handleExcluir(produto.id)}>
-                  EXCLUIR
-                </button>
+                <div className="admin-card-actions">
+                  <button className="admin-button edit-button" onClick={() => handleEditar(produto.id)}>
+                    EDITAR
+                  </button>
+                  <button className="admin-button exclude-button" onClick={() => confirmExcluir(produto.id)}>
+                    EXCLUIR
+                  </button>
+                </div>
               </div>
             ))
           )}
         </div>
       </main>
+
+      {showConfirmModal && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h3>Confirmar Exclusão</h3>
+            <p>Você tem certeza que deseja excluir este produto?</p>
+            <div className="modal-actions">
+              <button className="modal-button confirm-button" onClick={handleExcluirConfirmed}>
+                Sim, Excluir
+              </button>
+              <button className="modal-button cancel-button" onClick={handleCancelExcluir}>
+                Cancelar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
 
-export default ListarProdutos;
+export default ListarProdutosAdmin;

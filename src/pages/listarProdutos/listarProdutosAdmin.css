@@ -1,0 +1,318 @@
+/* src/pages/listarProdutosAdmin/listarProdutosAdmin.css */
+
+/* Container principal da página de administração */
+.admin-page-container {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f0f2f5; /* Fundo principal da página */
+  font-family: Arial, sans-serif; /* Fonte simples */
+}
+
+/* Sidebar de administração */
+.admin-sidebar {
+  width: 250px;
+  background-color: #d1e7e4; /* Cor de fundo da sidebar */
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+.admin-sidebar-header {
+  background-color: #a7d9d0; /* Cor da área 'Área de Administração' */
+  width: 100%;
+  padding: 30px 10px;
+  text-align: center;
+  border-radius: 8px;
+  margin-bottom: 30px;
+}
+
+.admin-sidebar-header h3 {
+  margin: 0;
+  color: #333;
+  font-size: 1.5em;
+  font-weight: 600;
+}
+
+.admin-sidebar-button {
+  width: 80%;
+  padding: 12px 20px;
+  margin-bottom: 15px;
+  border: none;
+  border-radius: 5px;
+  background-color: #92bfa7; /* Cor dos botões da sidebar */
+  color: white;
+  font-size: 1.1em;
+  cursor: pointer;
+}
+
+.admin-sidebar-button:hover {
+  background-color: #7baa8f; /* Cor no hover */
+}
+
+/* Área de conteúdo principal */
+.admin-content-area {
+  flex-grow: 1;
+  padding: 30px;
+  background-color: #f0f2f5; /* Fundo da área de conteúdo */
+}
+
+.admin-content-area h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 40px;
+  font-size: 2em;
+}
+
+/* Grid de produtos */
+.admin-products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 30px;
+  justify-content: center;
+}
+
+/* Cartão de produto individual no admin */
+.admin-product-card {
+  background-color: #fff; /* Fundo branco do cartão */
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.admin-product-card:hover {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Sombra mais destacada no hover */
+}
+
+.admin-product-card img {
+  max-width: 150px;
+  height: auto;
+  margin-bottom: 15px;
+  border-radius: 4px;
+  object-fit: contain;
+}
+
+.admin-product-card h4 {
+  margin: 10px 0 5px;
+  color: #333;
+  font-size: 1.2em;
+  min-height: 2.4em; /* Garante que o texto tenha altura mínima para consistência */
+}
+
+.admin-product-card p {
+  color: #555;
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+/* Ações do cartão (botões Editar/Excluir) */
+.admin-card-actions {
+  display: flex;
+  gap: 10px; /* Espaço entre os botões */
+  margin-top: auto; /* Empurra os botões para o final do card */
+  width: 100%;
+  justify-content: center;
+}
+
+.admin-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.95em;
+  font-weight: 500;
+  width: 80%; /* Largura dos botões */
+  margin-top: 10px; /* Espaço acima do botão */
+}
+
+.edit-button {
+  background-color: #e0e0e0; /* Cinza claro */
+  color: #333;
+}
+
+.edit-button:hover {
+  background-color: #cccccc;
+}
+
+.exclude-button {
+  background-color: #f44336; /* Vermelho */
+  color: white;
+}
+
+.exclude-button:hover {
+  background-color: #d32f2f;
+}
+
+/* Estilos para a mensagem de "Nenhum produto cadastrado" */
+.admin-content-area p {
+  text-align: center;
+  color: #666;
+  font-size: 1.1em;
+  margin-top: 3rem;
+}
+
+/* MODAL DE CONFIRMAÇÃO */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Fundo semi-transparente escuro */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1001; /* Garante que o modal fique acima de tudo */
+}
+
+.modal-content {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+}
+
+.modal-content h3 {
+  font-size: 1.5em;
+  color: #333;
+  margin-bottom: 0.8rem;
+}
+
+.modal-content p {
+  font-size: 1em;
+  color: #555;
+  margin-bottom: 1.5rem;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
+}
+
+.modal-button {
+  padding: 0.7rem 1.2rem;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.modal-button.confirm-button {
+  background-color: #dc3545;
+  color: white;
+}
+
+.modal-button.confirm-button:hover {
+  background-color: #c82333;
+}
+
+.modal-button.cancel-button {
+  background-color: #6c757d;
+  color: white;
+}
+
+.modal-button.cancel-button:hover {
+  background-color: #5a6268;
+}
+
+/* MENSAGENS DE FEEDBACK (SUCESSO/ERRO) */
+.message-box {
+  padding: 0.8rem;
+  margin-bottom: 1rem;
+  border-radius: 5px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.message-success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.message-error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+/* RESPONSIVIDADE (simplificada) */
+@media (max-width: 768px) {
+  .admin-page-container {
+    flex-direction: column; /* Sidebar empilha em telas menores */
+  }
+
+  .admin-sidebar {
+    width: 100%;
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 0; /* Remove bordas arredondadas no topo para se integrar melhor */
+    flex-direction: row; /* Botões da sidebar ficam lado a lado */
+    justify-content: center;
+    flex-wrap: wrap; /* Permite quebrar linha se houver muitos botões */
+    gap: 0.8rem;
+  }
+
+  .admin-sidebar-header {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+
+  .admin-sidebar-button {
+    flex: 1; /* Botões ocupam espaço flexível */
+    max-width: 180px; /* Limite de largura para evitar que fiquem muito grandes */
+  }
+
+  .admin-content-area {
+    padding: 20px;
+  }
+
+  .admin-products-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* 2 ou mais colunas em tablets */
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-sidebar-button {
+    width: 90%;
+  }
+  .admin-product-card {
+    padding: 15px;
+  }
+  .admin-product-card h4 {
+    font-size: 1em;
+  }
+  .admin-product-card p {
+    font-size: 1.1em;
+  }
+  .admin-button {
+    padding: 0.5rem 0.6rem;
+    font-size: 0.85em;
+  }
+  .modal-content {
+    padding: 1rem;
+  }
+  .modal-content h3 {
+    font-size: 1.3em;
+  }
+  .modal-content p {
+    font-size: 0.9em;
+  }
+  .modal-actions {
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+  .modal-button {
+    width: 100%;
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "produtos": [],
+  "users": [
+    {
+      "id": "454e",
+      "email": "teste@gmail.com",
+      "password": "senha"
+    },
+    {
+      "id": "5750",
+      "email": "c@hotmail.com",
+      "password": "123"
+    },
+    {
+      "id": "4def",
+      "email": "teste@hotmail.com",
+      "password": "123"
+    },
+    {
+      "id": "3114",
+      "email": "teste@hotmail.com",
+      "password": "senha"
+    },
+    {
+      "id": "4b67",
+      "email": "t@hotmail.com",
+      "password": "123"
+    }
+  ]
+}

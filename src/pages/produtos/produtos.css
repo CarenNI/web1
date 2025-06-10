@@ -8,7 +8,7 @@
   
   .produtos {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(5, 1fr);np
     gap: 1.5rem;
     position: relative;
    
@@ -101,11 +101,20 @@
     position: fixed;
     margin-top: 1.75rem;
     padding-left: 1.5rem;
+    background-color: #D4C9BE;
   }
 
   button{
     margin: 0 15 px;
   }
+  .topbar{
+    background-color: #D4C9BE;
+    gap: 1 rem;
+     width: 100%
+    
+  }
+  
+
 
 
 
